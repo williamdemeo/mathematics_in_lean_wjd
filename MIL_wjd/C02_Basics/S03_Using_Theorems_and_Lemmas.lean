@@ -109,29 +109,28 @@ example (h : a ≤ b) : c - exp b ≤ c - exp a := by
   rw [sub_le_sub_iff]
   exact add_le_add_left h' c
 
-example : 2 * a * b ≤ a ^ 2 + b ^ 2 := by
-  have h : 0 ≤ a ^ 2 - 2 * a * b + b ^ 2
-  calc
-    a ^ 2 - 2 * a * b + b ^ 2 = (a - b) ^ 2 := by ring
-    _ ≥ 0 := by apply pow_two_nonneg
-
-  calc
-    2 * a * b = 2 * a * b + 0 := by ring
-    _ ≤ 2 * a * b + (a ^ 2 - 2 * a * b + b ^ 2) := add_le_add (le_refl _) h
-    _ = a ^ 2 + b ^ 2 := by ring
-
-example : 2 * a * b ≤ a ^ 2 + b ^ 2 := by
+theorem two_mul_le_sq : 2 * a * b ≤ a ^ 2 + b ^ 2 := by
   have h : 0 ≤ a ^ 2 - 2 * a * b + b ^ 2
   calc
     a ^ 2 - 2 * a * b + b ^ 2 = (a - b) ^ 2 := by ring
     _ ≥ 0 := by apply pow_two_nonneg
   linarith
 
-example : |a * b| ≤ (a ^ 2 + b ^ 2) / 2 := by
-  have h₁ : a * b ≤ (a ^ 2 + b ^ 2) / 2 := sorry
-  have h₂ : -(a * b) ≤ (a ^ 2 + b ^ 2) / 2 := sorry
-  rw [abs_eq_max_neg]
-  exact max_le h₁ h₂
+theorem neg_two_mul_le_sq : - 2 * a * b ≤ a ^ 2 + b ^ 2 := by
+  have h : 0 ≤ a ^ 2 + 2 * a * b + b ^ 2
+  calc
+    a ^ 2 + 2 * a * b + b ^ 2 = (a + b) ^ 2 := by ring
+    _ ≥ 0 := by apply pow_two_nonneg
+  linarith
 
+example : |a * b| ≤ (a ^ 2 + b ^ 2) / 2 := by
+  have h₁ : (a * b) * 2 ≤ (a ^ 2 + b ^ 2) := by
+    rw [mul_comm, ←mul_assoc]
+    apply two_mul_le_sq
+  have h₂ : -(a * b) * 2 ≤ (a ^ 2 + b ^ 2) := by
+    rw [mul_comm, ←neg_mul_comm 2 (a * b), ←mul_assoc]
+    apply neg_two_mul_le_sq
+
+  apply abs_le'.mpr ⟨ by linarith, by linarith ⟩
 
 #check abs_le'.mpr

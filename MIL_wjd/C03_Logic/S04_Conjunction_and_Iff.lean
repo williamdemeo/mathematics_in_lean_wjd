@@ -176,7 +176,9 @@ theorem not_monotone_iff {f : ℝ → ℝ} : ¬Monotone f ↔ ∃ x y, x ≤ y �
   rfl
 
 example : ¬Monotone fun x : ℝ ↦ -x := by
-  sorry
+  apply not_monotone_iff.mpr
+  use 0, 1
+  constructor <;> norm_num
 
 section
 variable {α : Type*} [PartialOrder α]
@@ -184,8 +186,19 @@ variable (a b : α)
 
 example : a < b ↔ a ≤ b ∧ a ≠ b := by
   rw [lt_iff_le_not_le]
-  sorry
-
+  constructor
+  · intro ⟨h₀, h₁⟩
+    constructor
+    · exact h₀
+    · intro h
+      apply h₁
+      rw [h]
+  · intro ⟨h₀, h₁⟩
+    constructor
+    · exact h₀
+    · intro h
+      apply h₁
+      exact le_antisymm h₀ h
 end
 
 section
@@ -194,10 +207,25 @@ variable (a b c : α)
 
 example : ¬a < a := by
   rw [lt_iff_le_not_le]
-  sorry
+  push_neg
+  exact id
+
+example : a < b → b < c → a < c := by
+  intro h₀ h₁
+  rw [lt_iff_le_not_le] at *
+  constructor
+  · apply le_trans h₀.left h₁.left
+  · intro h
+    apply h₁.right
+    apply le_trans h h₀.left
 
 example : a < b → b < c → a < c := by
   simp only [lt_iff_le_not_le]
-  sorry
+  intro ⟨h₀, _⟩ ⟨h₂, h₃⟩
+  constructor
+  · apply le_trans h₀ h₂
+  · intro h
+    apply h₃
+    apply le_trans h h₀
 
 end

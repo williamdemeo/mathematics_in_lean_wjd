@@ -25,7 +25,7 @@ theorem convergesTo_const (a : ℝ) : ConvergesTo (fun x : ℕ ↦ a) a := by
   intro n nge
   rw [sub_self, abs_zero]
   apply εpos
-
+#check abs_add
 theorem convergesTo_add {s t : ℕ → ℝ} {a b : ℝ}
       (cs : ConvergesTo s a) (ct : ConvergesTo t b) :
     ConvergesTo (fun n ↦ s n + t n) (a + b) := by
@@ -35,7 +35,15 @@ theorem convergesTo_add {s t : ℕ → ℝ} {a b : ℝ}
   rcases cs (ε / 2) ε2pos with ⟨Ns, hs⟩
   rcases ct (ε / 2) ε2pos with ⟨Nt, ht⟩
   use max Ns Nt
-  sorry
+  intro n hn
+  have hsn : n ≥ Ns := le_trans (le_max_left _ _) hn
+  have htn : n ≥ Nt := le_trans (le_max_right _ _) hn
+  calc
+    |s n + t n - (a + b)| = |(s n - a) + (t n - b)| := by ring
+                          _ ≤ |s n - a| + |t n - b| := by apply abs_add (s n - a) (t n - b)
+                          _ < ε / 2 + |t n - b| := by simp [hs n hsn]
+                          _ < ε / 2 + ε / 2 := by convert add_lt_add_left (ht n htn) (ε / 2)
+                          _ = ε := by linarith
 
 theorem convergesTo_mul_const {s : ℕ → ℝ} {a : ℝ} (c : ℝ) (cs : ConvergesTo s a) :
     ConvergesTo (fun n ↦ c * s n) (c * a) := by
@@ -100,4 +108,3 @@ def ConvergesTo' (s : α → ℝ) (a : ℝ) :=
   ∀ ε > 0, ∃ N, ∀ n ≥ N, |s n - a| < ε
 
 end
-

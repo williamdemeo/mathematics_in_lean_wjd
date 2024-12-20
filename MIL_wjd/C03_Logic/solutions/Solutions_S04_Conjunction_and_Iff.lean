@@ -84,7 +84,7 @@ example : ¬a < a := by
 
 example : a < b → b < c → a < c := by
   simp only [lt_iff_le_not_le]
-  rintro ⟨h0, h1⟩ ⟨h2, h3⟩
+  rintro ⟨h0, h1⟩ ⟨h2, _⟩
   constructor
   · apply le_trans h0 h2
   intro h4

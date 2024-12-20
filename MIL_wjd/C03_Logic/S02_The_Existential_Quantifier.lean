@@ -40,7 +40,12 @@ def FnHasLb (f : ℝ → ℝ) :=
 theorem fnUb_add {f g : ℝ → ℝ} {a b : ℝ} (hfa : FnUb f a) (hgb : FnUb g b) :
     FnUb (fun x ↦ f x + g x) (a + b) :=
   fun x ↦ add_le_add (hfa x) (hgb x)
-
+theorem fnLb_add {f g : ℝ → ℝ} {a b : ℝ} (hfa : FnLb f a) (hgb : FnLb g b) :
+    FnLb (fun x ↦ f x + g x) (a + b) :=
+  fun x ↦ add_le_add (hfa x) (hgb x)
+theorem fnUb_mul {f : ℝ → ℝ} {a c : ℝ} (hfa : FnUb f a) (h : 0  ≤ c) :
+    FnUb (fun x ↦ c * f x) (c * a) :=
+  fun x ↦ mul_le_mul_of_nonneg_left (hfa x) h
 section
 
 variable {f g : ℝ → ℝ}
@@ -52,10 +57,20 @@ example (ubf : FnHasUb f) (ubg : FnHasUb g) : FnHasUb fun x ↦ f x + g x := by
   apply fnUb_add ubfa ubgb
 
 example (lbf : FnHasLb f) (lbg : FnHasLb g) : FnHasLb fun x ↦ f x + g x := by
-  sorry
+  rcases lbf with ⟨a, lbfa⟩
+  rcases lbg with ⟨b, lbgb⟩
+  use a + b
+  apply fnLb_add lbfa lbgb
 
 example {c : ℝ} (ubf : FnHasUb f) (h : c ≥ 0) : FnHasUb fun x ↦ c * f x := by
-  sorry
+  rcases ubf with ⟨a, ubfa⟩
+  use c * a
+  apply fnUb_mul ubfa h
+
+-- alternative statement and proof of preceding example
+example (h : c ≥ 0) : FnHasUb f → FnHasUb fun x ↦ c * f x := by
+  rintro ⟨a, ubfa⟩
+  exact ⟨c * a, fnUb_mul ubfa h⟩
 
 example : FnHasUb f → FnHasUb g → FnHasUb fun x ↦ f x + g x := by
   rintro ⟨a, ubfa⟩ ⟨b, ubgb⟩
@@ -128,8 +143,15 @@ example (divab : a ∣ b) (divbc : b ∣ c) : a ∣ c := by
   rw [ceq, beq]
   use d * e; ring
 
+example (divab : a ∣ b) (divbc : b ∣ c) : a ∣ c := by
+  rcases divab with ⟨d, rfl⟩
+  rcases divbc with ⟨e, rfl⟩
+  use d * e; ring
+
 example (divab : a ∣ b) (divac : a ∣ c) : a ∣ b + c := by
-  sorry
+  rcases divab with ⟨d, rfl⟩
+  rcases divac with ⟨e, rfl⟩
+  use d + e; ring
 
 end
 
@@ -143,7 +165,10 @@ example {c : ℝ} : Surjective fun x ↦ x + c := by
   dsimp; ring
 
 example {c : ℝ} (h : c ≠ 0) : Surjective fun x ↦ c * x := by
-  sorry
+  intro x
+  use x / c
+  apply mul_div_cancel₀
+  exact h
 
 example (x y : ℝ) (h : x - y ≠ 0) : (x ^ 2 - y ^ 2) / (x - y) = x + y := by
   field_simp [h]
@@ -163,6 +188,11 @@ variable {α : Type*} {β : Type*} {γ : Type*}
 variable {g : β → γ} {f : α → β}
 
 example (surjg : Surjective g) (surjf : Surjective f) : Surjective fun x ↦ g (f x) := by
-  sorry
+  intro y
+  rcases surjg y with ⟨x', hg'⟩
+  rcases surjf x' with ⟨x, hf'⟩
+  use x
+  dsimp
+  rw [hf', hg']
 
 end

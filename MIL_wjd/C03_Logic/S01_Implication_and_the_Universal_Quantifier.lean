@@ -42,10 +42,10 @@ theorem my_lemma4 :
     ∀ {x y ε : ℝ}, 0 < ε → ε ≤ 1 → |x| < ε → |y| < ε → |x * y| < ε := by
   intro x y ε epos ele1 xlt ylt
   calc
-    |x * y| = |x| * |y| := sorry
-    _ ≤ |x| * ε := sorry
-    _ < 1 * ε := sorry
-    _ = ε := sorry
+    |x * y| = |x| * |y| := by rw [abs_mul]
+    _ ≤ |x| * ε := by rw [mul_le_mul]
+    _ < 1 * ε := by rw [mul_lt_mul_right]
+    _ = ε := by rw [one_mul]
 
 def FnUb (f : ℝ → ℝ) (a : ℝ) : Prop :=
   ∀ x, f x ≤ a
@@ -142,6 +142,15 @@ example : s ⊆ s := by
   exact xs
 
 theorem Subset.refl : s ⊆ s := fun x xs ↦ xs
+
+theorem Subset.trans : r ⊆ s → s ⊆ t → r ⊆ t := by
+  intro rs st x xr
+  exact xt
+  where
+    xs : x ∈ s := by
+      exact rs
+    xt : x ∈ t := by sorry
+
 
 theorem Subset.trans : r ⊆ s → s ⊆ t → r ⊆ t := by
   sorry

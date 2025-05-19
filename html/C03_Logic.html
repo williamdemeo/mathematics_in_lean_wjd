@@ -7,7 +7,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>3. Logic &mdash; Mathematics in Lean 0.1 documentation</title>
-      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=0731ccc3" />
 
@@ -172,7 +172,7 @@ mentioning the objects.</p>
 <p>At this stage, you also know that if you use
 the <code class="docutils literal notranslate"><span class="pre">apply</span></code> tactic to apply <code class="docutils literal notranslate"><span class="pre">my_lemma</span></code>
 to a goal of the form <code class="docutils literal notranslate"><span class="pre">|a</span> <span class="pre">*</span> <span class="pre">b|</span> <span class="pre">&lt;</span> <span class="pre">&#948;</span></code>,
-you are left with new goals that require you to  prove
+you are left with new goals that require you to prove
 each of the hypotheses.</p>
 <p id="index-0">To prove a statement like this, use the <code class="docutils literal notranslate"><span class="pre">intro</span></code> tactic.
 Take a look at what it does in this example:</p>
@@ -287,7 +287,7 @@ but it is worth knowing that the natural numbers, integers, rationals,
 and real numbers are all instances.
 So if we prove the theorem <code class="docutils literal notranslate"><span class="pre">fnUb_add</span></code> at that level of generality,
 it will apply in all these instances.</p>
-<div class="highlight-lean notranslate"><div class="highlight"><pre><span></span><span class="kd">variable</span><span class="w"> </span><span class="o">{</span><span class="n">&#945;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="kt">Type</span><span class="bp">*</span><span class="o">}</span><span class="w"> </span><span class="o">{</span><span class="n">R</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="kt">Type</span><span class="bp">*</span><span class="o">}</span><span class="w"> </span><span class="o">[</span><span class="n">OrderedCancelAddCommMonoid</span><span class="w"> </span><span class="n">R</span><span class="o">]</span>
+<div class="highlight-lean notranslate"><div class="highlight"><pre><span></span><span class="kd">variable</span><span class="w"> </span><span class="o">{</span><span class="n">&#945;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="kt">Type</span><span class="bp">*</span><span class="o">}</span><span class="w"> </span><span class="o">{</span><span class="n">R</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="kt">Type</span><span class="bp">*</span><span class="o">}</span><span class="w"> </span><span class="o">[</span><span class="n">AddCommMonoid</span><span class="w"> </span><span class="n">R</span><span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="n">PartialOrder</span><span class="w"> </span><span class="n">R</span><span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="n">IsOrderedCancelAddMonoid</span><span class="w"> </span><span class="n">R</span><span class="o">]</span>
 
 <span class="k">#check</span><span class="w"> </span><span class="n">add_le_add</span>
 
@@ -643,9 +643,7 @@ ways to do it. For example, the <code class="docutils literal notranslate"><span
 </div>
 <p>Think of the first <code class="docutils literal notranslate"><span class="pre">obtain</span></code> instruction as matching the &#8220;contents&#8221; of <code class="docutils literal notranslate"><span class="pre">ubf</span></code>
 with the given pattern and assigning the components to the named variables.
-<code class="docutils literal notranslate"><span class="pre">rcases</span></code> and <code class="docutils literal notranslate"><span class="pre">obtain</span></code> are said to <code class="docutils literal notranslate"><span class="pre">destruct</span></code> their arguments, though
-there is a small difference in that <code class="docutils literal notranslate"><span class="pre">rcases</span></code> clears <code class="docutils literal notranslate"><span class="pre">ubf</span></code> from the context
-when it is done, whereas it is still present after <code class="docutils literal notranslate"><span class="pre">obtain</span></code>.</p>
+<code class="docutils literal notranslate"><span class="pre">rcases</span></code> and <code class="docutils literal notranslate"><span class="pre">obtain</span></code> are said to <code class="docutils literal notranslate"><span class="pre">destruct</span></code> their arguments.</p>
 <p>Lean also supports syntax that is similar to that used in other functional programming
 languages:</p>
 <div class="highlight-lean notranslate"><div class="highlight"><pre><span></span><span class="kd">example</span><span class="w"> </span><span class="o">(</span><span class="n">ubf</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">FnHasUb</span><span class="w"> </span><span class="n">f</span><span class="o">)</span><span class="w"> </span><span class="o">(</span><span class="n">ubg</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">FnHasUb</span><span class="w"> </span><span class="n">g</span><span class="o">)</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">FnHasUb</span><span class="w"> </span><span class="k">fun</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="bp">&#8614;</span><span class="w"> </span><span class="n">f</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="bp">+</span><span class="w"> </span><span class="n">g</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="kd">by</span>

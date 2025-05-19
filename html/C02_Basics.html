@@ -7,7 +7,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>2. Basics &mdash; Mathematics in Lean 0.1 documentation</title>
-      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=0731ccc3" />
 
@@ -139,7 +139,7 @@ The symbol doesn&#8217;t appear until you hit space or the tab key.
 If you hover over a symbol when reading a Lean file,
 VS Code will show you the syntax that can be used to enter it.
 If you are curious to see all available abbreviations, you can hit Ctrl-Shift-P
-and then type abbreviations to get access to the <code class="docutils literal notranslate"><span class="pre">Lean</span> <span class="pre">4:</span> <span class="pre">Show</span> <span class="pre">all</span> <span class="pre">abbreviations</span></code> command.
+and then type abbreviations to get access to the <code class="docutils literal notranslate"><span class="pre">Lean</span> <span class="pre">4:</span> <span class="pre">Show</span> <span class="pre">Unicode</span> <span class="pre">Input</span> <span class="pre">Abbreviations</span></code> command.
 If your keyboard does not have an easily accessible backslash,
 you can change the leading character by changing the
 <code class="docutils literal notranslate"><span class="pre">lean4.input.leader</span></code> setting.</p>
@@ -284,7 +284,7 @@ Use the <code class="docutils literal notranslate"><span class="pre">#check</spa
 <span class="w">  </span><span class="n">rw</span><span class="w"> </span><span class="o">[</span><span class="n">mul_comm</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="n">a</span><span class="o">,</span><span class="w"> </span><span class="bp">&#8592;</span><span class="w"> </span><span class="n">two_mul</span><span class="o">]</span>
 </pre></div>
 </div>
-<p>Whereas it is possible to figure out what it going on in this proof
+<p>Whereas it is possible to figure out what is going on in this proof
 by stepping through it in the editor,
 it is hard to read on its own.
 Lean provides a more structured way of writing proofs like this
@@ -489,14 +489,14 @@ which allows us to use the shorter name <code class="docutils literal notranslat
 To avoid errors due to name clashes,
 in the next example we put our versions of the library
 theorems in a new namespace called <code class="docutils literal notranslate"><span class="pre">MyRing.</span></code></p>
-<p>The next example shows that we do not need <code class="docutils literal notranslate"><span class="pre">add_zero</span></code> or <code class="docutils literal notranslate"><span class="pre">add_right_neg</span></code>
+<p>The next example shows that we do not need <code class="docutils literal notranslate"><span class="pre">add_zero</span></code> or <code class="docutils literal notranslate"><span class="pre">add_neg_cancel</span></code>
 as ring axioms, because they follow from the other axioms.</p>
 <div class="highlight-lean notranslate"><div class="highlight"><pre><span></span><span class="kn">namespace</span><span class="w"> </span><span class="n">MyRing</span>
 <span class="kd">variable</span><span class="w"> </span><span class="o">{</span><span class="n">R</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="kt">Type</span><span class="bp">*</span><span class="o">}</span><span class="w"> </span><span class="o">[</span><span class="n">Ring</span><span class="w"> </span><span class="n">R</span><span class="o">]</span>
 
 <span class="kd">theorem</span><span class="w"> </span><span class="n">add_zero</span><span class="w"> </span><span class="o">(</span><span class="n">a</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">R</span><span class="o">)</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="bp">+</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="bp">=</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="kd">by</span><span class="w"> </span><span class="n">rw</span><span class="w"> </span><span class="o">[</span><span class="n">add_comm</span><span class="o">,</span><span class="w"> </span><span class="n">zero_add</span><span class="o">]</span>
 
-<span class="kd">theorem</span><span class="w"> </span><span class="n">add_right_neg</span><span class="w"> </span><span class="o">(</span><span class="n">a</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">R</span><span class="o">)</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="bp">+</span><span class="w"> </span><span class="bp">-</span><span class="n">a</span><span class="w"> </span><span class="bp">=</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="kd">by</span><span class="w"> </span><span class="n">rw</span><span class="w"> </span><span class="o">[</span><span class="n">add_comm</span><span class="o">,</span><span class="w"> </span><span class="n">neg_add_cancel</span><span class="o">]</span>
+<span class="kd">theorem</span><span class="w"> </span><span class="n">add_neg_cancel</span><span class="w"> </span><span class="o">(</span><span class="n">a</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">R</span><span class="o">)</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="bp">+</span><span class="w"> </span><span class="bp">-</span><span class="n">a</span><span class="w"> </span><span class="bp">=</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="kd">by</span><span class="w"> </span><span class="n">rw</span><span class="w"> </span><span class="o">[</span><span class="n">add_comm</span><span class="o">,</span><span class="w"> </span><span class="n">neg_add_cancel</span><span class="o">]</span>
 
 <span class="k">#check</span><span class="w"> </span><span class="n">MyRing.add_zero</span>
 <span class="k">#check</span><span class="w"> </span><span class="n">add_zero</span>
@@ -778,7 +778,7 @@ within the block introduced by the dot, only one goal is visible,
 and it must be completed before the end of the block.
 Here we end the first block by starting a new one with another dot.
 We could just as well have decreased the indentation.
-In the fourth example and in the last example,
+In the third example and in the last example,
 we avoid going into tactic mode entirely:
 <code class="docutils literal notranslate"><span class="pre">le_trans</span> <span class="pre">h&#8320;</span> <span class="pre">h&#8321;</span></code> and <code class="docutils literal notranslate"><span class="pre">le_refl</span> <span class="pre">x</span></code> are the proof terms we need.</p>
 <p>Here are a few more library theorems:</p>
@@ -842,7 +842,7 @@ inequalities on the real numbers.</p>
 <p>Some of the theorems, <code class="docutils literal notranslate"><span class="pre">exp_le_exp</span></code>, <code class="docutils literal notranslate"><span class="pre">exp_lt_exp</span></code>
 use a <em>bi-implication</em>, which represents the
 phrase &#8220;if and only if.&#8221;
-(You can type it in VS Code with <code class="docutils literal notranslate"><span class="pre">\lr</span></code> of <code class="docutils literal notranslate"><span class="pre">\iff</span></code>).
+(You can type it in VS Code with <code class="docutils literal notranslate"><span class="pre">\lr</span></code> or <code class="docutils literal notranslate"><span class="pre">\iff</span></code>).
 We will discuss this connective in greater detail in the next chapter.
 Such a theorem can be used with <code class="docutils literal notranslate"><span class="pre">rw</span></code> to rewrite a goal to
 an equivalent one:</p>
@@ -893,6 +893,8 @@ There are a number of strategies you can use:</p>
 <a class="reference external" href="https://github.com/leanprover-community/mathlib4">GitHub repository</a>.</p></li>
 <li><p>You can use the API documentation on the Mathlib
 <a class="reference external" href="https://leanprover-community.github.io/mathlib4_docs/">web pages</a>.</p></li>
+<li><p>You can use <cite>Loogle &lt;https://loogle.lean-lang.org&gt;</cite>
+to search Lean and Mathlib definitions and theorems by patterns.</p></li>
 <li><p>You can rely on Mathlib naming conventions and Ctrl-space completion in
 the editor to guess a theorem name (or Cmd-space on a Mac keyboard).
 In Lean, a theorem named <code class="docutils literal notranslate"><span class="pre">A_of_B_of_C</span></code> establishes
@@ -1361,7 +1363,7 @@ For example, a <em>strict ordered ring</em> consists of a ring together
 with a partial order on the carrier
 satisfying additional axioms that say that the ring operations
 are compatible with the order:</p>
-<div class="highlight-lean notranslate"><div class="highlight"><pre><span></span><span class="kd">variable</span><span class="w"> </span><span class="o">{</span><span class="n">R</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="kt">Type</span><span class="bp">*</span><span class="o">}</span><span class="w"> </span><span class="o">[</span><span class="n">StrictOrderedRing</span><span class="w"> </span><span class="n">R</span><span class="o">]</span>
+<div class="highlight-lean notranslate"><div class="highlight"><pre><span></span><span class="kd">variable</span><span class="w"> </span><span class="o">{</span><span class="n">R</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="kt">Type</span><span class="bp">*</span><span class="o">}</span><span class="w"> </span><span class="o">[</span><span class="n">Ring</span><span class="w"> </span><span class="n">R</span><span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="n">PartialOrder</span><span class="w"> </span><span class="n">R</span><span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="n">IsStrictOrderedRing</span><span class="w"> </span><span class="n">R</span><span class="o">]</span>
 <span class="kd">variable</span><span class="w"> </span><span class="o">(</span><span class="n">a</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">R</span><span class="o">)</span>
 
 <span class="k">#check</span><span class="w"> </span><span class="o">(</span><span class="n">add_le_add_left</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="bp">&#8804;</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="bp">&#8594;</span><span class="w"> </span><span class="bp">&#8704;</span><span class="w"> </span><span class="n">c</span><span class="o">,</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="bp">+</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="bp">&#8804;</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="bp">+</span><span class="w"> </span><span class="n">b</span><span class="o">)</span>

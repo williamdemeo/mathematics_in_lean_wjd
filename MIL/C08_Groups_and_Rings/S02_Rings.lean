@@ -2,7 +2,7 @@ import Mathlib.RingTheory.Ideal.Quotient.Operations
 import Mathlib.RingTheory.Localization.Basic
 import Mathlib.RingTheory.DedekindDomain.Ideal
 import Mathlib.Analysis.Complex.Polynomial.Basic
-import Mathlib.Data.ZMod.Quotient
+import Mathlib.Data.ZMod.QuotientRing
 import MIL.Common
 
 noncomputable section
@@ -219,6 +219,6 @@ open MvPolynomial
 
 def circleEquation : MvPolynomial (Fin 2) ℝ := X 0 ^ 2 + X 1 ^ 2 - 1
 
-example : MvPolynomial.eval ![0, 1] circleEquation = 0 := by simp [circleEquation]
+example : MvPolynomial.eval ![1, 0] circleEquation = 0 := by simp [circleEquation]
 
 end Polynomials

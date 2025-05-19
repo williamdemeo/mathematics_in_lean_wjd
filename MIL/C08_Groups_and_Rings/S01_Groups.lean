@@ -215,7 +215,7 @@ def CayleyIsoMorphism (G : Type*) [Group G] : G ≃* (toPermHom G G).range :=
   Equiv.Perm.subgroupOfMulAction G G
 
 example {G X : Type*} [Group G] [MulAction G X] :
-    X ≃ (ω : orbitRel.Quotient G X) × (orbit G (Quotient.out' ω)) :=
+    X ≃ (ω : orbitRel.Quotient G X) × (orbit G (Quotient.out ω)) :=
   MulAction.selfEquivSigmaOrbits G X
 
 example {G X : Type*} [Group G] [MulAction G X] (x : X) :
@@ -283,7 +283,7 @@ variable [H.Normal] [K.Normal] [Fintype G] (h : Disjoint H K)
 #check restrict
 #check ker_restrict
 
-def iso₁ [Fintype G] (h : Disjoint H K) (h' : Nat.card G = Nat.card H * Nat.card K) : K ≃* G ⧸ H := by
+def iso₁ : K ≃* G ⧸ H := by
   sorry
 def iso₂ : G ≃* (G ⧸ K) × (G ⧸ H) := by
   sorry

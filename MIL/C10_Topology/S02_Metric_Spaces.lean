@@ -1,5 +1,5 @@
 import MIL.Common
-import Mathlib.Topology.Instances.Real
+import Mathlib.Topology.Instances.Real.Lemmas
 import Mathlib.Analysis.Normed.Operator.BanachSteinhaus
 
 open Set Filter
@@ -32,7 +32,7 @@ example {X Y : Type*} [MetricSpace X] [MetricSpace Y] {f : X → Y} (hf : Contin
 
 example {X Y : Type*} [MetricSpace X] [MetricSpace Y] {f : X → Y} (hf : Continuous f) :
     Continuous fun p : X × X ↦ dist (f p.1) (f p.2) :=
-  continuous_dist.comp ((hf.comp continuous_fst).prod_mk (hf.comp continuous_snd))
+  continuous_dist.comp ((hf.comp continuous_fst).prodMk (hf.comp continuous_snd))
 
 example {X Y : Type*} [MetricSpace X] [MetricSpace Y] {f : X → Y} (hf : Continuous f) :
     Continuous fun p : X × X ↦ dist (f p.1) (f p.2) := by
@@ -50,7 +50,6 @@ example {X Y : Type*} [MetricSpace X] [MetricSpace Y] {f : X → Y} (hf : Contin
 
 example {f : ℝ → X} (hf : Continuous f) : Continuous fun x : ℝ ↦ f (x ^ 2 + x) :=
   sorry
-
 example {X Y : Type*} [MetricSpace X] [MetricSpace Y] (f : X → Y) (a : X) :
     ContinuousAt f a ↔ ∀ ε > 0, ∃ δ > 0, ∀ {x}, dist x a < δ → dist (f x) (f a) < ε :=
   Metric.continuousAt_iff
@@ -83,9 +82,8 @@ example {s : Set X} : a ∈ closure s ↔ ∀ ε > 0, ∃ b ∈ s, a ∈ Metric.
   Metric.mem_closure_iff
 
 example {u : ℕ → X} (hu : Tendsto u atTop (𝓝 a)) {s : Set X} (hs : ∀ n, u n ∈ s) :
-    a ∈ closure s :=
+    a ∈ closure s := by
   sorry
-
 example {x : X} {s : Set X} : s ∈ 𝓝 x ↔ ∃ ε > 0, Metric.ball x ε ⊆ s :=
   Metric.nhds_basis_ball.mem_iff
 
@@ -124,9 +122,8 @@ example {X : Type*} [MetricSpace X] {Y : Type*} [MetricSpace Y] {f : X → Y} :
 
 example {X : Type*} [MetricSpace X] [CompactSpace X]
       {Y : Type*} [MetricSpace Y] {f : X → Y}
-    (hf : Continuous f) : UniformContinuous f :=
+    (hf : Continuous f) : UniformContinuous f := by
   sorry
-
 example (u : ℕ → X) :
     CauchySeq u ↔ ∀ ε > 0, ∃ N : ℕ, ∀ m ≥ N, ∀ n ≥ N, dist (u m) (u n) < ε :=
   Metric.cauchySeq_iff
@@ -153,9 +150,9 @@ theorem cauchySeq_of_le_geometric_two' {u : ℕ → X}
   obtain ⟨k, rfl : n = N + k⟩ := le_iff_exists_add.mp hn
   calc
     dist (u (N + k)) (u N) = dist (u (N + 0)) (u (N + k)) := sorry
-    _ ≤ ∑ i in range k, dist (u (N + i)) (u (N + (i + 1))) := sorry
-    _ ≤ ∑ i in range k, (1 / 2 : ℝ) ^ (N + i) := sorry
-    _ = 1 / 2 ^ N * ∑ i in range k, (1 / 2 : ℝ) ^ i := sorry
+    _ ≤ ∑ i  ∈ range k, dist (u (N + i)) (u (N + (i + 1))) := sorry
+    _ ≤ ∑ i  ∈ range k, (1 / 2 : ℝ) ^ (N + i) := sorry
+    _ = 1 / 2 ^ N * ∑ i  ∈ range k, (1 / 2 : ℝ) ^ i := sorry
     _ ≤ 1 / 2 ^ N * 2 := sorry
     _ < ε := sorry
 

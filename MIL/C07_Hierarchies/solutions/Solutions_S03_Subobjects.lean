@@ -81,7 +81,7 @@ instance [Group G] : SubgroupClass₁ (Subgroup₁ G) G :=
   inv_mem := Subgroup₁.inv_mem }
 
 
-instance [Monoid M] : Inf (Submonoid₁ M) :=
+instance [Monoid M] : Min (Submonoid₁ M) :=
   ⟨fun S₁ S₂ ↦
     { carrier := S₁ ∩ S₂
       one_mem := ⟨S₁.one_mem, S₂.one_mem⟩
@@ -108,7 +108,7 @@ instance [CommMonoid M] : HasQuotient M (Submonoid M) where
 def QuotientMonoid.mk [CommMonoid M] (N : Submonoid M) : M → M ⧸ N := Quotient.mk N.Setoid
 
 instance [CommMonoid M] (N : Submonoid M) : Monoid (M ⧸ N) where
-  mul := Quotient.map₂' (· * ·) (by
+  mul := Quotient.map₂ (· * ·) (by
     rintro a₁ b₁ ⟨w, hw, z, hz, ha⟩ a₂ b₂ ⟨w', hw', z', hz', hb⟩
     refine ⟨w*w', N.mul_mem hw hw', z*z', N.mul_mem hz hz', ?_⟩
     rw [mul_comm w, ← mul_assoc, mul_assoc a₁, hb, mul_comm, ← mul_assoc, mul_comm w, ha,

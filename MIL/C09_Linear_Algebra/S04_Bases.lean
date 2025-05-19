@@ -1,6 +1,7 @@
 import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
 import Mathlib.LinearAlgebra.Eigenspace.Minpoly
 import Mathlib.LinearAlgebra.Charpoly.Basic
+import Mathlib.Data.Complex.FiniteDimensional
 
 import MIL.Common
 
@@ -8,13 +9,13 @@ import MIL.Common
 section matrices
 
 -- Adding vectors
-#eval !![1, 2] + !![3, 4]  -- !![4, 6]
+#eval ![1, 2] + ![3, 4]  -- ![4, 6]
 
 -- Adding matrices
 #eval !![1, 2; 3, 4] + !![3, 4; 5, 6]  -- !![4, 6; 8, 10]
 
 -- Multiplying matrices
-#eval !![1, 2; 3, 4] * !![3, 4; 5, 6]  -- !![4, 6; 8, 10]
+#eval !![1, 2; 3, 4] * !![3, 4; 5, 6]  -- !![13, 16; 29, 36]
 
 open Matrix
 
@@ -26,9 +27,9 @@ open Matrix
 
 -- matrices acting on vectors on the right
 #eval  ![1, 1, 1] ᵥ* !![1, 2; 3, 4; 5, 6] -- ![9, 12]
-#eval row (Fin 1) ![1, 2] -- !![1, 2]
+#eval replicateRow (Fin 1) ![1, 2] -- !![1, 2]
 
-#eval col (Fin 1) ![1, 2] -- !![1; 2]
+#eval replicateCol (Fin 1) ![1, 2] -- !![1; 2]
 
 -- vector dot product
 #eval ![1, 2] ⬝ᵥ ![3, 4] -- `11`
@@ -140,6 +141,7 @@ example : Finsupp.linearCombination K B (B.repr v) = v :=
   B.linearCombination_repr v
 variable (f : ι → V) in
 #check (Finsupp.linearCombination K f : (ι →₀ K) →ₗ[K] V)
+
 section
 
 variable {W : Type*} [AddCommGroup W] [Module K W]
